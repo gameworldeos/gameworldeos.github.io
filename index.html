@@ -29,6 +29,9 @@
                             <li style="padding-left: 5px;padding-right: 5px">
                                 <a href="https://eosflare.io/account/gameworldcom" target="_blank">Contract Address</a>
                             </li>
+                            <li style="padding-left: 5px;padding-right: 5px">
+                                <a href="https://github.com/gameworldeos/eosgameworld" target="_blank">Source Code</a>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -683,18 +686,38 @@ $(function(){
         $("#cost").html("0.0000 EOS");
     }
 
-    function checkTime(i) {
+    function IsPC() {
+        var userAgentInfo = navigator.userAgent;
+        var Agents = new Array("Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod");
+        var flag = true;
+        for (var v = 0; v < Agents.length; v++) {
+            if (userAgentInfo.indexOf(Agents[v]) > 0) {
+                flag = false;
+                break;
+            }
+        }
+        return flag;
+    }
+
+
+        function checkTime(i) {
         if(i<10) { i="0"+i; } return i;
     }
     function showTime() { 　
         if (endTime) {
-            var timedate= new Date(endTime); 　　
+            var timedate = new Date(endTime); 　　
+
             var d = new Date();
             var len = d.getTime();
             var offset = d.getTimezoneOffset() / 60;
             var utcTime = len + offset * 3600 * 1000;
-            var now  = new Date(utcTime);
+            if (IsPC()) {
+                var now  = new Date(utcTime);
+            } else {
+                var now  = new Date();
+            }
             var date = parseInt(timedate.getTime() - now.getTime())/1000;　
+
             if(date <= 0) {
                 isEnded = true;
                 $("#headtimer").html("Over! Please wait the next round!");
