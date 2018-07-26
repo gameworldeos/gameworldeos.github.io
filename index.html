@@ -1,0 +1,720 @@
+<html lang="en" class="fontawesome-i2svg-active fontawesome-i2svg-complete">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="theme-color" content="#343a40">
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/custom.css">
+    <link rel="stylesheet" href="css/alertify.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/ghostframe.css">
+    <script src="js/jquery.min.js"></script>
+    <title>EOS Game World</title>
+</head>
+<body>
+<div id="main-wrapper">
+    <header class="topbar fixed-top">
+        <module-navbar data-is="state-navbar">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark jumboshade">
+                <div class="container">
+                    <a class="navbar-brand" style="font-size:1.5rem" href="">EOS Game World</a>
+                    <div class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Settings
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li style="padding-left: 5px;padding-right: 5px"><a href="#" id="log-btn">Login With Scatter</a></li>
+                            <li style="padding-left: 5px;padding-right: 5px">
+                                <a href="https://eosflare.io/account/gameworldcom" target="_blank">Contract Address</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </module-navbar>
+    </header>
+</div>
+<div id="spacer" class="spacer"></div>
+<module-template data-is="state-play">
+    <div class="blurryboy"></div>
+    <div class="jumbotron rounded-0 text-center text-light teaser-cover">
+        <div class="container">
+            <h4 class="display-4 scammed" style="font-style: italic;" id="current-user"> someone else is</h4>
+            <h1 class="display-1 scammed">EXIT Game</h1>
+            <h2 class="display-3">
+                <span class="ethglitch titleglow pot">loading...</span>
+                <span class="headtimer" id="headtimer">loading...</span>
+            </h2>
+            <br>
+            <a href="javascript:void(0)" class="buyOneTicket btn btn-lg btn-block btn-purp pulse marginb">
+                <div class="row">
+                    <div class="col-sm-11">
+                        This is just a game, don't spend too much eos !
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="container" style="margin-top:-1rem;">
+        <div class="row">
+            <div class="col-sm">
+                <ul class="nav nav-tabs tabs-border-adjust" id="buyTabs" role="tablist">
+                    <li class="nav-item tab-item">
+                        <a class="nav-link tab-link active" id="purchaseTab" data-toggle="tab" href="#purchaseArea" role="tab" aria-controls="purchaseArea" aria-selected="true">Purchase</a>
+                    </li>
+                    <li class="nav-item tab-item">
+                        <a class="nav-link tab-link" id="vaultTab" data-toggle="tab" href="#vaultArea" role="tab" aria-controls="vaultArea" aria-selected="false">Vault</a>
+                    </li>
+                    <li class="nav-item tab-item">
+                        <a class="nav-link tab-link" id="inviteTab" data-toggle="tab" href="#inviteArea" role="tab" aria-controls="inviteArea" aria-selected="false">Invite Url</a>
+                    </li>
+                </ul>
+                <div class="tab-content" id="buyArea">
+                    <div class="tab-pane fade show active" id="purchaseArea">
+                        <div class="jumbotron jumbotron-adjust text-light bg-dark jumboshade tab-rounded">
+                            <div class="row">
+                                <div class="col">
+                                    <p class="lead nomarginb">Keyring</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col">
+                                    <div id="purchase" class="tab-pane fade show active" role="tabpanel">
+                                        <div class="row" id="purchase">
+                                            <div class="col">
+                                                <div class="input-group mb-3">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">
+                                                            <svg class="svg-inline--fa fa-key fa-w-16" aria-hidden="true" data-prefix="fas" data-icon="key" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M512 176.001C512 273.203 433.202 352 336 352c-11.22 0-22.19-1.062-32.827-3.069l-24.012 27.014A23.999 23.999 0 0 1 261.223 384H224v40c0 13.255-10.745 24-24 24h-40v40c0 13.255-10.745 24-24 24H24c-13.255 0-24-10.745-24-24v-78.059c0-6.365 2.529-12.47 7.029-16.971l161.802-161.802C163.108 213.814 160 195.271 160 176 160 78.798 238.797.001 335.999 0 433.488-.001 512 78.511 512 176.001zM336 128c0 26.51 21.49 48 48 48s48-21.49 48-48-21.49-48-48-48-48 21.49-48 48z"></path></svg>
+                                                        </span>
+                                                    </div>
+                                                    <input type="text" class="form-control text-center" value="100" id="keysToBuy">
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text" id="current-money">loading...</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row marginb">
+                                            <div class="col">
+                                                <div class="btn-group d-flex" role="group">
+                                                    <button class="btn btn-outline-yel w-100 increment" id="btnAdd1">+ 100 Keys</button>
+                                                    <button class="btn btn-outline-yel w-100 increment" id="btnAdd2">+ 200 Keys</button>
+                                                    <!--<button class="btn btn-outline-yel w-40 increment" id="btnAdd5">+ 500</button>-->
+                                                    <button class="btn btn-outline-yel w-30 increment" id="btnAdd10">+ 1000</button>
+                                                    <button class="btn btn-outline-yel w-30 increment" id="btnAdd100">+ 10000</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="position: relative;">
+                                            <div class="col">
+                                                <button type="button" id="tixBuy" class="btn btn-block btn-purp btn-lg ticketProcess">Send EOS</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row marginb">
+                                <div class="col">
+                                    <p class="lead nomarginb" id="selectedTeam">Please choose a team !</p>
+                                </div>
+                            </div>
+                            <div class="row marginb distribution">
+                                <div class="col">
+                                    <div class="row">
+                                        <div class="col-6 team">
+                                            <label class="teamselector">
+                                                <input class="form-check-input form-radio teamsave" type="radio" autocomplete="off" name="teamselect" value="1" id="1" checked>
+                                                <img src="img/red.png" id="redTeam">
+                                                <h5>Red</h5>
+                                                <p>Trickle down Divinomics</p>
+                                            </label>
+                                            <div>
+                                                <p style="color:#2ecc71">60% to dividends</p>
+                                                <p style="color:#2ecc71">30% to pot</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 team">
+                                            <label class="teamselector">
+                                                <input class="form-check-input form-radio teamsave" type="radio" autocomplete="off" name="teamselect" value="2" id="2">
+                                                <img src="img/blue.png" id="blueTeam">
+                                                <h5>Blue</h5>
+                                                <p>Feed on the greed of others.</p>
+                                            </label>
+                                            <p style="color:#2ecc71">30% to dividends</p>
+                                            <p style="color:#2ecc71">60% to pot</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="vaultArea">
+                        <div class="jumbotron jumbotron-adjust text-light bg-dark jumboshade tab-rounded">
+                            <div class="row">
+                                <div class="col">
+                                    <p class="lead nomarginb">Vault</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="jumbotron jumbotron-adjust teamscore">
+                                <div class="row">
+                                    <div class="col">
+                                        <p class="lead">Exit Game</p>
+                                    </div>
+                                    <div class="col">
+                                        <p class="h3 text-right" id="scammed">0.0000 EOS</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <p class="lead">Bad Advice</p>
+                                    </div>
+                                    <div class="col">
+                                        <p class="h3 text-right" id="advice">0.0000 EOS</p>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col">
+                                        <p class="lead">Total Gains</p>
+                                    </div>
+                                    <div class="col">
+                                        <p class="h3 text-right glow gains">0.0000 EOS</p>
+                                        <p class="text-right gains-usdt">≙ 0.00 USDT</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <p class="text-right nomarginb">
+                                            <button href="" class="btn btn-outline-purp btn-block" id="withdrawEarnings">
+                                                <svg class="svg-inline--fa fa-hand-holding-heart fa-w-18" aria-hidden="true" data-prefix="fas" data-icon="hand-holding-heart" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" data-fa-i2svg=""><path fill="currentColor" d="M275.3 250.5c7 7.4 18.4 7.4 25.5 0l108.9-114.2c31.6-33.2 29.8-88.2-5.6-118.8-30.8-26.7-76.7-21.9-104.9 7.7L288 36.9l-11.1-11.6C248.7-4.4 202.8-9.2 172 17.5c-35.3 30.6-37.2 85.6-5.6 118.8l108.9 114.2zm290 77.6c-11.8-10.7-30.2-10-42.6 0L430.3 402c-11.3 9.1-25.4 14-40 14H272c-8.8 0-16-7.2-16-16s7.2-16 16-16h78.3c15.9 0 30.7-10.9 33.3-26.6 3.3-20-12.1-37.4-31.6-37.4H192c-27 0-53.1 9.3-74.1 26.3L71.4 384H16c-8.8 0-16 7.2-16 16v96c0 8.8 7.2 16 16 16h356.8c14.5 0 28.6-4.9 40-14L564 377c15.2-12.1 16.4-35.3 1.3-48.9z"></path></svg>
+                                                Withdraw
+                                            </button>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="inviteArea">
+                        <div class="jumbotron jumbotron-adjust text-light bg-dark jumboshade tab-rounded">
+                            <div class="row">
+                                <div class="col">
+                                    <p class="lead nomarginb">To get 8%:</p>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col">
+                                    https://eosgameworld.github.io?ref={{eos_account_name}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm">
+                <ul class="nav nav-tabs tabs-border-adjust" id="statTabs" role="tablist">
+                    <li class="nav-item tab-item">
+                        <a class="nav-link tab-link active" id="potTab" data-toggle="tab" href="#potArea" role="tab" aria-controls="potArea" aria-selected="true">
+                            Round
+                        </a>
+                    </li>
+                    <li class="nav-item tab-item">
+                        <a class="nav-link tab-link" id="teamTab" data-toggle="tab" href="#teamArea" role="tab" aria-controls="teamArea" aria-selected="false">
+                            Teams
+                        </a>
+                    </li>
+                    <li class="nav-item tab-item">
+                        <a class="nav-link tab-link" id="statsTab" data-toggle="tab" href="#statsArea" role="tab" aria-controls="statsArea" aria-selected="false">
+                            Stats
+                        </a>
+                    </li>
+                </ul>
+                <div class="tab-content" id="statArea">
+                    <div class="tab-pane fade show active" id="potArea" role="tabpanel" aria-labelledby="potArea">
+                        <div class="jumbotron jumbotron-adjust text-light bg-dark jumboshade tab-rounded">
+                            <div class="row nomarginb margin-top">
+                                <div class="col">
+                                    <p class="h2 text-center">Contract will drain in <br>
+                                        <span class="glow boxtimer" id="boxtimer">loading...</span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="row marginb">
+                                <div class="col">
+                                    <div class="progress">
+                                        <div class="progress-bar boxglow" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="jumbotron jumbotron-adjust teamscore">
+                                <div class="row nomarginb">
+                                    <div class="col-auto">
+                                        <p class="h4">Active Pot</p>
+                                    </div>
+                                    <div class="col">
+                                        <p class="h2 text-right glow ethglitch pot">loading...</p>
+                                    </div>
+                                </div>
+                                <div class="row marginb">
+                                    <div class="col text-right" id="pot-usdt">loading...</div>
+                                </div>
+                                <div class="row nomarginb">
+                                    <div class="col">
+                                        <p class="h4">Your Keys</p>
+                                    </div>
+                                    <div class="col">
+                                        <p class="h2 text-right" id="your-keys">0.0000 </p>
+                                    </div>
+                                </div>
+                                <div class="row marginb">
+                                    <div class="col text-right" id="total-keys">loading...</div>
+                                </div>
+                                <div class="row nomarginb">
+                                    <div class="col">
+                                        <p class="h4">Your Cost</p>
+                                    </div>
+                                    <div class="col">
+                                        <p class="h2 text-right" id="cost">0.0000 EOS</p>
+                                    </div>
+                                </div>
+                                <div class="row nomarginb">
+                                    <div class="col">
+                                        <p class="h4">Your Earnings</p>
+                                    </div>
+                                    <div class="col">
+                                        <p class="h2 text-right gains">0.0000 EOS</p>
+                                    </div>
+                                </div>
+                                <div class="row marginb">
+                                    <div class="col text-right gains-usdt">≙ 0.00 USDT</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="teamArea" role="tabpanel" aria-labelledby="teamArea">
+                        <div class="jumbotron jumbotron-adjust text-light bg-dark jumboshade tab-rounded">
+                            <div class="row">
+                                <div class="col">
+                                    <p class="lead nomarginb">Teams</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="jumbotron jumbotron-adjust text-center teamscore">
+                                        <p class="lead">Red</p>
+                                        <img src="img/red.png" width="25%">
+                                        <hr>
+                                        <p class="glow-yel" id="red-eos">loading...</p>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="jumbotron jumbotron-adjust text-center teamscore">
+                                        <p class="lead">Blue</p>
+                                        <img src="img/blue.png" width="25%">
+                                        <hr>
+                                        <p class="glow-yel" id="blue-eos">loading...</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="statsArea" role="tabpanel" aria-labelledby="statsArea">
+                        <div class="jumbotron jumbotron-adjust text-light bg-dark jumboshade tab-rounded">
+                            <div class="jumbotron jumbotron-adjust teamscore">
+                                <div class="row nomarginb">
+                                    <div class="col-auto">
+                                        <p class="h4">Total Invested:</p>
+                                    </div>
+                                    <div class="col">
+                                        <p class="h2 text-right glow ethglitch" id="invested-eos">
+                                            loading...
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="row marginb">
+                                    <div class="col text-right" id="invested-usdt">loading...</div>
+                                </div>
+                                <div class="row nomarginb">
+                                    <div class="col-auto">
+                                        <p class="h4">Distributed Rewards:</p>
+                                    </div>
+                                    <div class="col">
+                                        <p class="h2 text-right glow ethglitch" id="rewards">loading...</p>
+                                    </div>
+                                </div>
+                                <div class="row marginb">
+                                    <div class="col text-right" id="rewards-usdt">loading...</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</module-template>
+
+<script src="js/alertify.js"></script>
+<script src="js/bootstrap.bundle.js"></script>
+<script src="js/fontawesome-all.min.js"></script>
+<script src="js/eos.min.js"></script>
+<script src="https://cdn.bootcss.com/bignumber.js/7.2.1/bignumber.min.js"></script>
+
+<script>
+$(function(){
+    scatter = null;
+    seletedTeam = null;
+    money = null;
+    eosPrice = null;
+    endTime = null;
+    roundMask = null;
+    roundRedMask = null;
+    roundKey = null;
+    isEnded = false;
+    roundBlueMask = null;
+    base = 1000000;
+
+    protocol = 'https';
+    host = 'api.tokenika.io';
+    port = 443;
+    chainId = "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906";
+
+    network = {
+        protocol: protocol,
+        host: host,
+        port: port,
+        blockchain: 'eos',
+        chainId: chainId
+    };
+
+    api = Eos({
+        httpEndpoint: protocol + "://" + host + ":" + port,
+        chainId: chainId
+    });
+    console.log(protocol + "://" + host + ":" + port)
+
+    document.addEventListener('scatterLoaded', function(scatterExtension) {
+        scatter = window.scatter;
+        eos = scatter.eos(network, Eos, {}, "https");
+    });
+
+    setTimeout(function (){
+        if (!localStorage.getItem('account') && !scatter) {
+            alert("Please install Scatter!");
+            return;
+        }
+    }, 3000);
+
+    if (localStorage.getItem('account')) {
+        $("#log-btn").html("Logout");
+    } else {
+        $("#log-btn").html("Login With Scatter");
+    }
+
+    function getUrlParam(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]);
+        return null;
+    }
+
+    ref = getUrlParam("ref");
+    if (ref && ref.length <= 12) {
+        ref = ref
+    } else {
+        ref = '';
+    }
+
+    function fetchEosPrice() {
+        $.get('https://api.huobi.pro/market/detail?symbol=eosusdt', function (data) {
+            data = JSON.parse(data);
+            eosPrice = data.tick.close;
+        })
+    }
+    fetchEosPrice();
+
+    $("#redTeam").click(function () {
+        seletedTeam = "red";
+        $("#selectedTeam").html("You have chosen the Red Team !");
+    });
+    $("#blueTeam").click(function () {
+        seletedTeam = "blue";
+        $("#selectedTeam").html("You have chosen the Blue Team !");
+    });
+
+    seletedTeam = "red";
+    $("#selectedTeam").html("You have chosen the Red Team !");
+
+    function addKeys(val) {
+        if (!roundKey) {
+            alert("fail to get roundKey");
+            return;
+        }
+        var oldVal = $("#keysToBuy").val();
+        oldVal = parseInt(oldVal);
+        var newVal = oldVal+val;
+        $("#keysToBuy").val(newVal);
+        money = calMoney(newVal, roundKey);
+        $("#current-money").html("@ "+money+" EOS");
+    }
+
+    $("#btnAdd1").click(function () {
+        addKeys(100);
+    });
+    $("#btnAdd2").click(function () {
+        addKeys(200);
+    });
+    $("#btnAdd5").click(function () {
+        addKeys(500);
+    });
+    $("#btnAdd10").click(function () {
+        addKeys(1000);
+    });
+    $("#btnAdd100").click(function () {
+        addKeys(10000);
+    });
+
+    $("#tixBuy").click(function () {
+        if (!localStorage.getItem('account') && !scatter) {
+            alert("Please install Scatter!");
+            return;
+        }
+
+        if (isEnded) {
+            alert('The round is ended.Please wait the next round!');
+            return
+        }
+
+        if (!seletedTeam) {
+            alert('Please choose a team!');
+            return
+        }
+
+        if (isNaN(money)) {
+            alert('Please input number!');
+            return
+        }
+
+        if ($("#keysToBuy").val() < 100) {
+            alert('at least 100 keys!');
+            return
+        }
+        scatter.getIdentity({accounts: [network]}).then(function (identity) {
+            var account = identity.accounts[0];
+            var options = {
+                authorization: account.name + '@' + account.authority,
+                broadcast: true,
+                sign: true
+            };
+            var memo = seletedTeam + '-' + ref;
+            eos.transfer(account.name, 'gameworldcom',money.toFixed(4)+' EOS', memo, options).then(function(tx) {
+                alert("Success!");
+            }).catch(function (e) {
+                e = JSON.parse(e);
+                alert('Tx failed: '+e.error.details[0].message);
+            })
+            doLoginSuccess(identity);
+        })
+
+    });
+
+    $("#log-btn").click(function () {
+        if (!localStorage.getItem('account') && !scatter) {
+            alert("Please install Scatter!");
+            return;
+        }
+
+        if ($(this).html() == "Logout") {
+            scatter.forgetIdentity().then(function() {
+                doLogoutSuccess();
+            });
+        } else {
+            localStorage.removeItem('account');
+            scatter.getIdentity({accounts: [network]}).then(function (identity) {
+                doLoginSuccess(identity);
+            }).catch(function (e) {
+                console.log(e);
+
+            });
+        }
+    });
+
+    $("#withdrawEarnings").click(function () {
+        if (!localStorage.getItem('account') && !scatter) {
+            alert("Please install Scatter!");
+            return;
+        }
+
+        scatter.getIdentity({accounts: [network]}).then(function (identity) {
+            var account = doLoginSuccess(identity);
+            var options = {
+                authorization: account.name + '@' + account.authority,
+                broadcast: true,
+                sign: true
+            };
+
+            eos.contract('gameworldcom', options).then(function(gameworldcom) {
+                gameworldcom.withdraw(account.name, options).then(function (tx) {
+                    alert('Success!');
+                }).catch(function (e) {
+                    e = JSON.parse(e);
+                    alert('Tx failed: '+e.error.details[0].message);
+                });
+            })
+
+        })
+
+    });
+
+    function calMoney(keysToBuy, currentKeys) {
+        function getEos(key) {
+            var val = new BigNumber(key);
+            val = val.plus(479999);
+            val = val.pow(2).minus(new BigNumber("230399520000")).dividedToIntegerBy("1280000");
+            return val.toString();
+        }
+        var _  = getEos(new BigNumber(currentKeys).plus(keysToBuy))-getEos(currentKeys);
+        return Math.floor(_*1.01)/10000;
+    }
+
+    function fetchRound() {
+        api.getTableRows(true, "gameworldcom", "gameworldcom", "round").then(function (data) {
+            if (data.rows.length == 0) {
+                money = calMoney($("#keysToBuy").val(), 0);
+                $("#current-money").html("@ "+money+" EOS");
+                alert("The game is not started!")
+                return
+            }
+
+            var row = data.rows[0];
+            endTime = row.end;
+            roundKey = row.key / 10000;
+
+            money = calMoney($("#keysToBuy").val(), roundKey)
+
+            roundMask = row.mask;
+            roundRedMask = row.redmask;
+            roundBlueMask = row.bluemask;
+
+            $(".pot").html(row.pot/10000 + " EOS");
+            if (eosPrice) {
+                $("#pot-usdt").html("≙ "+ Math.floor(row.pot/10000*eosPrice*100)/100 +" USDT");
+            }
+
+            $("#total-keys").html("Total "+roundKey+" Keys");
+
+            $("#current-money").html("@ "+money+" EOS");
+
+            $("#current-user").html(row.player + " is");
+            $("#red-eos").html(row.red/10000+" KEY");
+            $("#blue-eos").html(row.blue/10000+" KEY");
+
+            $("#invested-eos").html(row.eos/10000 + " EOS");
+            if (eosPrice) {
+                var usdt = eosPrice * row.eos;
+                usdt = Math.floor(usdt*100) / 100;
+                $("#invested-usdt").html("≙ " + usdt + " USDT");
+            }
+            var rewards = (row.eos-row.pot) / 10000;
+            $("#rewards").html(rewards + " EOS");
+            if (eosPrice) {
+                $("#rewards-usdt").html("≙ "+ Math.floor(rewards*eosPrice*100)/100 +" USDT");
+            }
+            setTimeout(fetchRound, 1000)
+        });
+    }
+
+    function fetchUser() {
+        var account = localStorage.getItem('account');
+        if (account) {
+            account = JSON.parse(localStorage.getItem('account'));
+            api.getTableRows(true, "gameworldcom", account.name, "player").then(function (data) {
+                if (data.rows.length >= 1) {
+                    var row = data.rows[0];
+                    $("#your-keys").html(row.key / 10000);
+                    if (roundMask) {
+                        var scammed = Math.floor(row.key * roundMask / base - row.mask + row.pot_vault)/ 10000;
+                        if (roundRedMask !== null) {
+                            scammed += Math.floor((row.red * roundRedMask + row.blue * roundBlueMask)/base) / 10000;
+                        }
+                        $("#scammed").html(scammed + " EOS");
+                        var advice = row.aff_vault / 10000;
+                        $("#advice").html(advice + " EOS");
+                        var gains = advice + scammed;
+                        gains = Math.floor(gains*10000) / 10000;
+                        $(".gains").html(gains + " EOS");
+                        $("#cost").html(row.eos/10000+" EOS")
+                        if (eosPrice) {
+                            var usdt = Math.floor(eosPrice * gains * 100) / 100;
+                            $(".gains-usdt").html("≙ " + usdt + " USDT");
+                        }
+                    }
+                }
+            })
+        }
+        setTimeout(fetchUser, 3000)
+    }
+
+    setTimeout(fetchRound, 800)
+    setTimeout(fetchUser, 800)
+
+    function doLoginSuccess(identity) {
+        var account = identity.accounts[0];
+        localStorage.setItem('account', JSON.stringify(account));
+        $("#log-btn").html("Logout");
+        return account;
+    }
+
+    function doLogoutSuccess() {
+        localStorage.removeItem('account');
+        $("#log-btn").html("Login With Scatter");
+        $("#your-keys").html("0.0000");
+        $("#scammed").html("0.0000 EOS");
+        $("#advice").html("0.0000 EOS");
+        $(".gains").html("0.0000 EOS");
+        $(".gains-usdt").html("≙ 0.00 USDT");
+        $("#cost").html("0.0000 EOS");
+    }
+
+    function checkTime(i) {
+        if(i<10) { i="0"+i; } return i;
+    }
+    function showTime() { 　
+        if (endTime) {
+            var timedate= new Date(endTime); 　　
+            var d = new Date();
+            var len = d.getTime();
+            var offset = d.getTimezoneOffset() / 60;
+            var utcTime = len + offset * 3600 * 1000;
+            var now  = new Date(utcTime);
+            var date = parseInt(timedate.getTime() - now.getTime())/1000;　
+            if(date <= 0) {
+                isEnded = true;
+                $("#headtimer").html("Over! Please wait the next round!");
+                $("#boxtimer").html("Over! Please wait the next round!");
+                return;
+            }
+            var hour = parseInt(date/60/60);
+            var minute = parseInt(date/60%60);
+            var second = parseInt(date%60);
+            hour = checkTime(hour);
+            minute = checkTime(minute);
+            second = checkTime(second);
+            var leftTime = hour + ":" + minute + ":" + second;
+            $("#headtimer").html(leftTime);
+            $("#boxtimer").html(leftTime);
+        }
+        setTimeout(showTime, 1000)
+    }
+    showTime();
+});
+</script>
+</body>
+</html>
