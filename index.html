@@ -618,7 +618,7 @@ $(function(){
 
             $("#invested-eos").html(row.eos/10000 + " EOS");
             if (eosPrice) {
-                var usdt = eosPrice * row.eos;
+                var usdt = eosPrice * row.eos / 10000;
                 usdt = Math.floor(usdt*100) / 100;
                 $("#invested-usdt").html("≙ " + usdt + " USDT");
             }
