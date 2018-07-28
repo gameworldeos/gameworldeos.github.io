@@ -32,6 +32,9 @@
                             <li style="padding-left: 5px;padding-right: 5px">
                                 <a href="https://github.com/gameworldeos/eosgameworld" target="_blank">Source Code</a>
                             </li>
+                            <li style="padding-left: 5px;padding-right: 5px">
+                                <a href="https://github.com/gameworldeos/eosgameworld" target="_blank">Rules</a>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -40,6 +43,51 @@
     </header>
 </div>
 <div id="spacer" class="spacer"></div>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Rules</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h5>Dividend rules:</h5>
+                <p>
+                    If you choose the red team to buy keys, 60% of your sent EOS will be given to the current key holders immediately, and another 30% will be kept in the active pot until the countdown becomes 0.
+                </p>
+                <p>
+                    If you choose the blue team  to buy keys, 30% of your sent EOS will be given to the current key holders immediately, and another 60% will be kept in the active pot until the countdown becomes 0.
+                </p>
+                <h5>
+                    Active pot allocation:
+                </h5>
+                <p>
+                    The last one who buys the key before the countdown becomes 0 will become the lucky player and decide the final active pot allocation plan.
+                </p>
+                <p>
+                    If he chooses the red team, 60% of the active pot will be given directly to this last lucky player, and 30% of the active pot will be divided among the red team key holders.
+                </p>
+                <p>
+
+                    If he chooses the blue tea, 30% of the active pot will be given diretly to this last lucky player, and 60% of the active pot will be divided among the blue team key holders.
+
+                </p>
+                <h5>
+                    Referral bonus:
+                </h5>
+                <p>
+                    When other players buy keys through your referral link, you will get 8% of their sent EOS as referral bonus.
+                </p>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 <module-template data-is="state-play">
     <div class="blurryboy"></div>
     <div class="jumbotron rounded-0 text-center text-light teaser-cover">
@@ -363,6 +411,17 @@
         </div>
     </div>
 </module-template>
+
+
+<div style="height: 40px;width: 100%;background-color: #f000f0;position: fixed;bottom: 0;
+left: 0;opacity: 0.8;text-align: center;line-height: 40px;font-size: 25px;
+color: #e6ae49;
+">
+    <button type="button" class="btn btn-link" data-toggle="modal" data-target="#exampleModal" style="color: #e6ae49;">
+        Rules
+    </button>
+
+</div>
 
 <script src="js/alertify.js"></script>
 <script src="js/bootstrap.bundle.js"></script>
