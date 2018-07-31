@@ -145,12 +145,26 @@
 <module-template data-is="state-play">
     <div class="blurryboy"></div>
     <div class="jumbotron rounded-0 text-center text-light teaser-cover">
-        <div class="container">
+        <div class="container" id="startedContainer">
             <h4 class="display-4 scammed" style="font-style: italic;" id="current-user"> someone else is</h4>
             <h1 class="display-1 scammed">EXIT Game</h1>
             <h2 class="display-3">
                 <span class="ethglitch titleglow pot">loading...</span>
                 <span class="headtimer" id="headtimer">loading...</span>
+            </h2>
+            <br>
+            <a href="javascript:void(0)" class="buyOneTicket btn btn-lg btn-block btn-purp pulse marginb">
+                <div class="row">
+                    <div class="col-sm-11">
+                        This is just a game, don't spend too much eos !
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="container" id="toStartContainer">
+            <h4 class="display-4 scammed" style="font-style: italic;">The next round will be started in</h4>
+            <h2 class="display-3">
+                <span id="headtimer2">loading...</span>
             </h2>
             <br>
             <a href="javascript:void(0)" class="buyOneTicket btn btn-lg btn-block btn-purp pulse marginb">
@@ -737,6 +751,8 @@ $(function(){
             $('#startAt').html(startTime.Format('MM-dd hh:mm:ss'));
 
             endTime = convertToLocalTime(row.end);
+            isEnded = row.ended == 1;
+            isStarted = new Date().getTime() > startTime.getTime();
 
             roundKey = row.key / 10000;
 
@@ -856,7 +872,31 @@ $(function(){
     function checkTime(i) {
         if(i<10) { i="0"+i; } return i;
     }
+
+    function displayTimeDelta(seconds) {
+        var hour = parseInt(seconds/60/60);
+        var minute = parseInt(seconds/60%60);
+        var second = parseInt(seconds%60);
+        hour = checkTime(hour);
+        minute = checkTime(minute);
+        second = checkTime(second);
+        return hour + ":" + minute + ":" + second;
+    }
+
     function showTime() { 　
+        if (!startTime) {
+            setTimeout(showTime, 1000)
+            return
+        }
+
+        if (!isStarted) {
+            $('#startedContainer').hide();
+            $('#toStartContainer').show();
+
+            $('#headtimer2').html(displayTimeDelta(parseInt(startTime.getTime() - new Date().getTime())/1000))
+            return
+        }
+
         if (endTime) {
             var timedate = new Date(endTime); 　　
 
@@ -869,21 +909,17 @@ $(function(){
             } else {
                 var now  = new Date();
             }
-            var date = parseInt(timedate.getTime() - now.getTime())/1000;　
+            var seconds = parseInt(timedate.getTime() - now.getTime())/1000;　
 
-            if(date <= 0) {
+            if(seconds <= 0) {
                 isEnded = true;
                 $("#headtimer").html("Over! Please wait the next round!");
                 $("#boxtimer").html("Over! Please wait the next round!");
                 return;
             }
-            var hour = parseInt(date/60/60);
-            var minute = parseInt(date/60%60);
-            var second = parseInt(date%60);
-            hour = checkTime(hour);
-            minute = checkTime(minute);
-            second = checkTime(second);
-            var leftTime = hour + ":" + minute + ":" + second;
+
+            var leftTime = displayTimeDelta(seconds);
+
             $("#headtimer").html(leftTime);
             $("#boxtimer").html(leftTime);
         }
