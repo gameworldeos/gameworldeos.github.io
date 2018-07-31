@@ -894,6 +894,7 @@ $(function(){
             $('#toStartContainer').show();
 
             $('#headtimer2').html(displayTimeDelta(parseInt(startTime.getTime() - new Date().getTime())/1000))
+            setTimeout(showTime, 1000)
             return
         }
 
