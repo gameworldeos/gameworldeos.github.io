@@ -515,7 +515,10 @@ Date.prototype.Format = function (fmt) { //author: meizz
 }
 
 $(function(){
-    $('#notice').modal({show: true});
+    if (!localStorage.getItem('showNotice')) {
+        $('#notice').modal({show: true});
+        localStorage.setItem('showNotice', '1')
+    }
 
     scatter = null;
     seletedTeam = null;
