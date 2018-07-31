@@ -164,7 +164,10 @@
         <div class="container" id="toStartContainer">
             <h4 class="display-4 scammed" style="font-style: italic;">The 2nd round will be started in</h4>
             <h2 class="display-3">
-                <span id="headtimer2">loading...</span>
+                <span class="ethglitch titleglow" id="headtimer2">loading...</span>
+            </h2>
+            <h2>
+                <span id="headtimer3">loading...</span>
             </h2>
             <br>
             <a href="javascript:void(0)" class="buyOneTicket btn btn-lg btn-block btn-purp pulse marginb">
@@ -901,6 +904,7 @@ $(function(){
             $('#toStartContainer').show();
 
             $('#headtimer2').html(displayTimeDelta(parseInt(startTime.getTime() - new Date().getTime())/1000))
+            $('#headtimer3').html('('+startTime.Format('MM-dd hh:mm:ss') +')')
             setTimeout(showTime, 1000)
             return
         }
