@@ -96,25 +96,43 @@
                 </button>
             </div>
             <div class="modal-body">
+                <h5>Update about the 2nd round of the FOMO EOS World Game</h5>
                 <p>
-                    Hi all, the 1st round of the game is over now. Congratulations to the user "delphywallet" for winning the final pot.
+                    Considering the enthusiastic feedback from the community, we've decided to start the 2nd round of the game at <span id="startAt"></span>.
+
+                    We've cleaned all the data including the referral relations from the 1st round and sent all your earnings in the 1st round back to your accounts already. Right now, we're working on some improvements to make the game more balanced, interesting and fair in the coming rounds.
                 </p>
-                <p>
-                    Please withdraw your total earnings now. We will invoke contract interface to help you withdraw before kicking off the next round. Your earnings are safe.
+
+                <h5>Frequent questions:</h5>
+                <p style="font-weight: bold;color: #f000f0">Q: How could we win over bots during the final pot competing process?</p>
+                <p>A: In the 2nd round, there's one big update that you're expected to see a gradual growing entrance threshold as time goes by. It means you need to buy an increasing number of entrance keys each time to compete the final pot when the game is approaching the end. It's designed to improve the bot cost and lower the bot advantage in the final pot competing process.</p>
+
+                <p style="font-weight: bold;color: #f000f0">Q: Did the team swap the contract sneakingly during the game?</p>
+                <p>A: We only update and re-deploy the contract code when the previous round is over.</p>
+
+                <p style="font-weight: bold;color: #f000f0">Q: Could the team win the pot by cheating?</p>
+                <p>A: The game behavior is fully controlled by the contract code and the EOS main network. Nobody could decide who/which team or when this lucky player would win the final pot.
                 </p>
-                <p>
-                    Please pay attention that we plan to start the next round at 08/02/2018 00:00 (UTC-5 NewYork Time).
+
+                <p>Q: Could I use my own referral link to play?</p>
+                <p>A: All players could receive the exciting 8% referral bonus only when you visit the site from an earlier player's referral link. If you try to cheat by visiting your own referral link to win the referral bonus for yourself, you won't get the bonus since your account is not an earlier player yet.
+                </p>
+                <br>
+
+                <p style="font-weight: bold;color: #f000f0">Q: Why do I sometimes see the wrong countdown time?</p>
+                <p>A: Your browser will show the correct remaining time wherever your timezone is. But the remaining time could go wrong if you encounter a network glitch which could be resolved by refreshing again.</p>
+
+                <p style="font-weight: bold;color: #f000f0">Q: Why do I sometimes see the dividends stop growing?</p>
+                <p>A: In the 1st round, some users didn't see instant dividend when the active pot increases. Sometimes the new dividend isn't large enough to be updated on the front page due to the data precision limitation which is normal. But all dividends are always added to your balance correcly by the contract and could be withdrawn at any time. Any more questions, you are welcome to check the contract code directly in our github repo.</p>
+
+                <p style="font-weight: bold;color: #e6ae49">Life is like a box of EOS and you don't know how much you will get in return. Mind your own risk and enjoy the game!
                 </p>
 
                 <h5>discord channel:</h5>
                 <p>
                     <a href="https://discord.gg/8uKp8gq" target="_blank" style="color: blue">https://discord.gg/8uKp8gq</a>
                 </p>
-
-                <!--<h5>reddit</h5>-->
-                <!--<p>-->
-                    <!--<a href="https://www.reddit.com/r/eos/comments/920gcr/fomo_like_game_on_eos/" target="_blank" style="color: blue">https://www.reddit.com/r/eos/comments/920gcr/fomo_like_game_on_eos/</a>-->
-                <!--</p>-->
+                <br>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
@@ -328,7 +346,7 @@
                         <div class="jumbotron jumbotron-adjust text-light bg-dark jumboshade tab-rounded">
                             <div class="row nomarginb margin-top">
                                 <div class="col">
-                                    <p class="h2 text-center">Contract will drain in <br>
+                                    <p class="h2 text-center" >Contract will drain in <br>
                                         <span class="glow boxtimer" id="boxtimer">loading...</span>
                                     </p>
                                 </div>
@@ -466,6 +484,22 @@ color: #e6ae49;
 <script src="https://cdn.bootcss.com/bignumber.js/7.2.1/bignumber.min.js"></script>
 
 <script>
+Date.prototype.Format = function (fmt) { //author: meizz
+    var o = {
+        "M+": this.getMonth() + 1, //月份
+        "d+": this.getDate(), //日
+        "h+": this.getHours(), //小时
+        "m+": this.getMinutes(), //分
+        "s+": this.getSeconds(), //秒
+        "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+        "S": this.getMilliseconds() //毫秒
+    };
+    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+    for (var k in o)
+        if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+    return fmt;
+}
+
 $(function(){
     $('#notice').modal({show: true});
 
@@ -478,8 +512,12 @@ $(function(){
     roundRedMask = null;
     roundKey = null;
     isEnded = false;
+    isStarted = false;
+    isEnded = false;
     roundBlueMask = null;
     base = 1000000;
+    startTime = null;
+    endTime = null;
 
     protocol = 'https';
     host = 'api.tokenika.io';
@@ -689,12 +727,17 @@ $(function(){
             if (data.rows.length == 0) {
                 money = calMoney($("#keysToBuy").val(), 0);
                 $("#current-money").html("@ "+money+" EOS");
-                alert("The game is not started!")
+//                alert("The game is not started!")
                 return
             }
 
             var row = data.rows[0];
-            endTime = row.end;
+            startTime = convertToLocalTime(row.start);
+
+            $('#startAt').html(startTime.Format('MM-dd hh:mm:ss'));
+
+            endTime = convertToLocalTime(row.end);
+
             roundKey = row.key / 10000;
 
             money = calMoney($("#keysToBuy").val(), roundKey)
@@ -794,6 +837,20 @@ $(function(){
             }
         }
         return flag;
+    }
+
+    function convertToLocalTime(s) {
+        var timedate = new Date(s);
+        if (!IsPC()) {
+            return timedate;
+        }
+
+        var d = new Date();
+        var len = d.getTime();
+        var offset = d.getTimezoneOffset() / 60;
+
+        timedate.setTime(timedate.getTime()-offset*3600*1000);
+        return timedate;
     }
 
     function checkTime(i) {
