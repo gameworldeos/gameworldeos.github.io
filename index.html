@@ -85,6 +85,45 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="notice" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="noticeLabel">Notice</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    Hi all, the 1st round of the game is over now. Congratulations to the user "delphywallet" for winning the final pot.
+                </p>
+                <p>
+                    Please withdraw your total earnings now. We will invoke contract interface to help you withdraw before kicking off the next round. Your earnings are safe.
+                </p>
+                <p>
+                    Please pay attention that we plan to start the next round at 08/02/2018 00:00 (UTC-5 NewYork Time).
+                </p>
+
+                <h5>discord channel:</h5>
+                <p>
+                    <a href="https://discord.gg/8uKp8gq" target="_blank" style="color: blue">https://discord.gg/8uKp8gq</a>
+                </p>
+
+                <!--<h5>reddit</h5>-->
+                <!--<p>-->
+                    <!--<a href="https://www.reddit.com/r/eos/comments/920gcr/fomo_like_game_on_eos/" target="_blank" style="color: blue">https://www.reddit.com/r/eos/comments/920gcr/fomo_like_game_on_eos/</a>-->
+                <!--</p>-->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <module-template data-is="state-play">
     <div class="blurryboy"></div>
     <div class="jumbotron rounded-0 text-center text-light teaser-cover">
@@ -428,6 +467,8 @@ color: #e6ae49;
 
 <script>
 $(function(){
+    $('#notice').modal({show: true});
+
     scatter = null;
     seletedTeam = null;
     money = null;
@@ -794,7 +835,6 @@ $(function(){
     showTime();
 });
 </script>
-<!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123061930-1"></script>
 <script>
     window.dataLayer = window.dataLayer || [];
