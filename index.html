@@ -339,7 +339,7 @@
                             <br>
                             <div class="row">
                                 <div class="col">
-                                    https://gameworldeos.github.io?ref={{eos_account_name}}
+                                    https://gameworldeos.github.io?ref=eos_account_name
                                 </div>
                             </div>
                         </div>
@@ -621,6 +621,17 @@ $(function(){
     $("#selectedTeam").html("You have chosen the Red Team !");
 
     function addKeys(val) {
+        if (!isStarted) {
+            alert("The round has not been started!");
+            return
+        }
+
+        if (isEnded) {
+            alert("The round has been ended!");
+            return
+        }
+
+
         if (!roundKey) {
             alert("fail to get roundKey");
             return;
@@ -653,6 +664,12 @@ $(function(){
         if (!localStorage.getItem('account') && !scatter) {
             alert("Please install Scatter!");
             return;
+        }
+
+
+        if (!isStarted) {
+            alert("The round has not been started!");
+            return
         }
 
         if (isEnded) {
@@ -878,7 +895,6 @@ $(function(){
         }
 
         var d = new Date();
-        var len = d.getTime();
         var offset = d.getTimezoneOffset() / 60;
 
         timedate.setTime(timedate.getTime()-offset*3600*1000);
