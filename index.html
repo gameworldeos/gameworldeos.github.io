@@ -832,7 +832,10 @@ $(function(){
         var account = localStorage.getItem('account');
         if (account) {
             account = JSON.parse(localStorage.getItem('account'));
-            $("#refUrl").html("https://gameworldeos.github.io?ref="+account.name);
+            var refUrl = "https://gameworldeos.github.io?ref="+account.name;
+            if (refUrl !== $("#refUrl").html()) {
+                $("#refUrl").html(refUrl);
+            }
             api.getTableRows(true, "gameworldcom", account.name, "player").then(function (data) {
                 if (data.rows.length >= 1) {
                     var row = data.rows[0];
