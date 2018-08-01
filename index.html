@@ -7,11 +7,13 @@
     <meta name="description" content="Welcome to blockchain development. Your ICO is over, hype is drying up. Take the private keys, drain everything.">
     <meta name="keywords" content="EOS, scam, F3D, Fomo, Fomo3D, Proof of Weak Hands, P3D, PoWH3D, Cryptocurrency, ICO, Parody, Satire, Gambling, Jackpot, Lottery, Referral, Passive Income, UBI">
 
+    
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/custom.css">
     <link rel="stylesheet" href="css/alertify.css">
     <link rel="stylesheet" href="css/base.css">
     <link rel="stylesheet" href="css/ghostframe.css">
+    <link rel="stylesheet" href="css/dialog.css">
     <script src="js/jquery.min.js"></script>
     <title>EOS Game World</title>
 </head>
@@ -40,6 +42,12 @@
                             </li>
                         </ul>
                     </div>
+
+                    <div id="divselect"> 
+                        <em>Select Account</em> 
+                        <ul class="account-ul">
+                        </ul> 
+                    </div> 
                 </div>
             </nav>
         </module-navbar>
@@ -503,11 +511,12 @@ color: #e6ae49;
     </button>
 
 </div>
-
 <script src="js/alertify.js"></script>
 <script src="js/bootstrap.bundle.js"></script>
 <script src="js/fontawesome-all.min.js"></script>
 <script src="js/eos.min.js"></script>
+<script src="js/tp.js"></script>
+<script src="js/mDialogMin.js"></script>
 <script src="https://cdn.bootcss.com/bignumber.js/7.2.1/bignumber.min.js"></script>
 
 <script>
@@ -532,6 +541,43 @@ $(function(){
         $('#notice').modal({show: true});
         localStorage.setItem('showNotice', '1')
     }
+
+    var isTP = tp.isConnected();
+    tpAccount = null
+
+    if (isTP) {
+        $('.dropdown').hide();
+        $('#divselect').show()
+
+        $("#divselect em").click(function(){ 
+            var ul = $("#divselect ul"); 
+            if(ul.css("display")=="none"){ 
+                ul.slideDown("fast"); 
+            }else{ 
+                ul.slideUp("fast"); 
+            } 
+        }); 
+        $("#divselect ul").on('click', 'li', function(){ 
+            var txt = $(this).text(); 
+            $("#divselect em").html(txt); 
+    
+            $("#divselect ul").hide(); 
+            tpAccount = txt;
+        }); 
+
+        var mySelect = $('.account-ul');
+        tp.getWalletList('eos').then(function (data) {
+            if (data.wallets && data.wallets['eos']) {
+                var walletList = data.wallets['eos'];
+                for(var i = 0; i < walletList.length; i++) {
+                    var accountName = walletList[i].name;
+                    mySelect.append('<li>' + accountName + '</li>')
+                }
+            }
+        })
+    }
+
+    
 
     scatter = null;
     seletedTeam = null;
@@ -574,8 +620,8 @@ $(function(){
     });
 
     setTimeout(function (){
-        if (!localStorage.getItem('account') && !scatter) {
-            alert("Please install Scatter!");
+        if (!localStorage.getItem('account') && !scatter && !isTP) {
+            Dialog.init("Please install Scatter!");
             return;
         }
     }, 3000);
@@ -601,10 +647,21 @@ $(function(){
     }
 
     function fetchEosPrice() {
-        $.get('https://api.huobi.pro/market/detail?symbol=eosusdt', function (data) {
-            data = JSON.parse(data);
-            eosPrice = data.tick.close;
-        })
+        if (isTP) {
+            $.get('https://api.coinmarketcap.com/v2/ticker/1765/').then(function (res) {
+                if (res.data) {
+                    eosPrice = res.data.quotes.USD.price.toFixed(4);
+                }
+            });
+        }
+        else {
+            $.get('https://api.huobi.pro/market/detail?symbol=eosusdt', function (data) {
+                data = JSON.parse(data);
+                eosPrice = data.tick.close;
+            })
+        }
+
+        
     }
     fetchEosPrice();
 
@@ -622,18 +679,18 @@ $(function(){
 
     function addKeys(val) {
         if (!isStarted) {
-            alert("The round has not been started!");
+            Dialog.init("The round has not been started!");
             return
         }
 
         if (isEnded) {
-            alert("The round has been ended!");
+            Dialog.init("The round has been ended!");
             return
         }
 
 
         if (!roundKey) {
-            alert("fail to get roundKey");
+            Dialog.init("fail to get roundKey");
             return;
         }
         var oldVal = $("#keysToBuy").val();
@@ -661,29 +718,34 @@ $(function(){
     });
 
     $("#tixBuy").click(function () {
-        if (!localStorage.getItem('account') && !scatter) {
-            alert("Please install Scatter!");
+        if (!localStorage.getItem('account') && !scatter && !isTP) {
+            Dialog.init("Please install Scatter!");
+            return;
+        }
+
+        if (isTP && !tpAccount) {
+            Dialog.init('please select an EOS Account');
             return;
         }
 
 
         if (!isStarted) {
-            alert("The round has not been started!");
+            Dialog.init("The round has not been started!");
             return
         }
 
         if (isEnded) {
-            alert('The round is ended.Please wait the next round!');
+            Dialog.init('The round is ended.Please wait the next round!');
             return
         }
 
         if (!seletedTeam) {
-            alert('Please choose a team!');
+            Dialog.init('Please choose a team!');
             return
         }
 
         if (isNaN(money)) {
-            alert('Please input number!');
+            Dialog.init('Please input number!');
             return
         }
 
@@ -693,10 +755,28 @@ $(function(){
         }
 
         if ($("#keysToBuy").val() < minKeys) {
-            alert('at least ' + minKeys + ' keys!');
+            Dialog.init('at least ' + minKeys + ' keys!');
             return
         }
-        scatter.getIdentity({accounts: [network]}).then(function (identity) {
+
+        if (isTP) {
+            var memo = seletedTeam + '-' + ref;
+            tp.eosTokenTransfer({
+                from: tpAccount,
+                to: 'gameworldcom',
+                amount: money.toFixed(4),
+                tokenName: 'EOS',
+                precision: 4,
+                contract: 'eosio.token',
+                memo: seletedTeam + '-' + ref
+            }).then(function(data){
+                Dialog.init('Success!');
+            }).catch(function (err) {
+                Dialog.init(JSON.stringify(err));
+            });
+        }   
+        else {
+            scatter.getIdentity({accounts: [network]}).then(function (identity) {
             var account = identity.accounts[0];
             var options = {
                 authorization: account.name + '@' + account.authority,
@@ -705,19 +785,19 @@ $(function(){
             };
             var memo = seletedTeam + '-' + ref;
             eos.transfer(account.name, 'gameworldcom',money.toFixed(4)+' EOS', memo, options).then(function(tx) {
-                alert("Success!");
+                Dialog.init("Success!");
             }).catch(function (e) {
                 e = JSON.parse(e);
-                alert('Tx failed: '+e.error.details[0].message);
+                Dialog.init('Tx failed: '+e.error.details[0].message);
             })
             doLoginSuccess(identity);
-        })
-
+            })
+        }
     });
 
     $("#log-btn").click(function () {
         if (!localStorage.getItem('account') && !scatter) {
-            alert("Please install Scatter!");
+            Dialog.init("Please install Scatter!");
             return;
         }
 
@@ -737,29 +817,61 @@ $(function(){
     });
 
     $("#withdrawEarnings").click(function () {
-        if (!localStorage.getItem('account') && !scatter) {
-            alert("Please install Scatter!");
+        if (!localStorage.getItem('account') && !scatter && !isTP) {
+            Dialog.init("Please install Scatter!");
             return;
         }
 
-        scatter.getIdentity({accounts: [network]}).then(function (identity) {
-            var account = doLoginSuccess(identity);
-            var options = {
-                authorization: account.name + '@' + account.authority,
-                broadcast: true,
-                sign: true
-            };
-
-            eos.contract('gameworldcom', options).then(function(gameworldcom) {
-                gameworldcom.withdraw(account.name, options).then(function (tx) {
-                    alert('Success!');
-                }).catch(function (e) {
-                    e = JSON.parse(e);
-                    alert('Tx failed: '+e.error.details[0].message);
+        if (isTP) {
+            if (!tpAccount) {
+                Dialog.init("please select an EOS Account");
+                return;
+            }
+            else {
+                var actions = {
+                    actions: [
+                        {
+                        account: "gameworldcom",
+                        name: "withdraw",
+                        authorization: [
+                            {
+                            actor: tpAccount,
+                            permission: "active"
+                            }
+                        ],
+                        data: {
+                            to: tpAccount
+                        }
+                        }
+                    ]
+                };
+                tp.pushEosAction(actions).then(function (data) {
+                    Dialog.init('Success!');
+                }).catch(function (err) {
+                    Dialog.init(JSON.stringify(err));
                 });
-            })
+            }
+        }
+        else {
+            scatter.getIdentity({accounts: [network]}).then(function (identity) {
+                var account = doLoginSuccess(identity);
+                var options = {
+                    authorization: account.name + '@' + account.authority,
+                    broadcast: true,
+                    sign: true
+                };
 
-        })
+                eos.contract('gameworldcom', options).then(function(gameworldcom) {
+                    gameworldcom.withdraw(account.name, options).then(function (tx) {
+                        Dialog.init('Success!');
+                    }).catch(function (e) {
+                        e = JSON.parse(e);
+                        Dialog.init('Tx failed: '+e.error.details[0].message);
+                    });
+                })
+
+            })
+        }
 
     });
 
@@ -779,7 +891,7 @@ $(function(){
             if (data.rows.length == 0) {
                 money = calMoney($("#keysToBuy").val(), 0);
                 $("#current-money").html("@ "+money+" EOS");
-//                alert("The game is not started!")
+//                Dialog.init("The game is not started!")
                 return
             }
 
@@ -830,13 +942,23 @@ $(function(){
 
     function fetchUser() {
         var account = localStorage.getItem('account');
+        var accountName = null;
+
         if (account) {
-            account = JSON.parse(localStorage.getItem('account'));
-            var refUrl = "https://gameworldeos.github.io?ref="+account.name;
+            accountName = JSON.parse(localStorage.getItem('account')).name;
+        }
+        else if (isTP) {
+            accountName = tpAccount;
+        }
+
+        if (accountName) {
+            var refUrl = "https://gameworldeos.github.io?ref=" + accountName;
             if (refUrl !== $("#refUrl").html()) {
                 $("#refUrl").html(refUrl);
             }
-            api.getTableRows(true, "gameworldcom", account.name, "player").then(function (data) {
+
+            api.getTableRows(true, "gameworldcom", accountName, "player").then(function (data) {
+
                 if (data.rows.length >= 1) {
                     var row = data.rows[0];
                     $("#your-keys").html(row.key / 100);
