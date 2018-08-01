@@ -167,7 +167,7 @@
                 </div>
             </a>
         </div>
-        <div class="container" id="toStartContainer">
+        <div class="container" id="toStartContainer" style="display: none">
             <h4 class="display-4 scammed" style="font-style: italic;">The 2nd round will be started in</h4>
             <h2 class="display-3">
                 <span class="ethglitch titleglow" id="headtimer2">loading...</span>
@@ -545,9 +545,9 @@ $(function(){
     isStarted = false;
     isEnded = false;
     roundBlueMask = null;
-    base = 1000000;
     startTime = null;
     endTime = null;
+    base = 1000000;
 
     protocol = 'https';
     host = 'api.tokenika.io';
@@ -687,8 +687,13 @@ $(function(){
             return
         }
 
-        if ($("#keysToBuy").val() < 100) {
-            alert('at least 100 keys!');
+        var minKeys = Math.floor(roundKey / 10000);
+        if (minKeys < 100) {
+            minKeys = 100
+        }
+
+        if ($("#keysToBuy").val() < minKeys) {
+            alert('at least ' + minKeys + ' keys!');
             return
         }
         scatter.getIdentity({accounts: [network]}).then(function (identity) {
@@ -766,7 +771,7 @@ $(function(){
             return val.toString();
         }
         var _  = getEos(new BigNumber(currentKeys).plus(keysToBuy))-getEos(currentKeys);
-        return Math.floor(_*1.01)/10000;
+        return Math.floor(_*1.05)/10000;
     }
 
     function fetchRound() {
@@ -787,7 +792,7 @@ $(function(){
             isEnded = row.ended == 1;
             isStarted = new Date().getTime() > startTime.getTime();
 
-            roundKey = row.key / 10000;
+            roundKey = row.key / 100;
 
             money = calMoney($("#keysToBuy").val(), roundKey)
 
@@ -805,8 +810,8 @@ $(function(){
             $("#current-money").html("@ "+money+" EOS");
 
             $("#current-user").html(row.player + " is");
-            $("#red-eos").html(row.red/10000+" KEY");
-            $("#blue-eos").html(row.blue/10000+" KEY");
+            $("#red-eos").html(row.red/100+" KEY");
+            $("#blue-eos").html(row.blue/100+" KEY");
 
             $("#invested-eos").html(row.eos/10000 + " EOS");
             if (eosPrice) {
@@ -830,7 +835,7 @@ $(function(){
             api.getTableRows(true, "gameworldcom", account.name, "player").then(function (data) {
                 if (data.rows.length >= 1) {
                     var row = data.rows[0];
-                    $("#your-keys").html(row.key / 10000);
+                    $("#your-keys").html(row.key / 100);
                     if (roundMask) {
                         var scammed = Math.floor(row.key * roundMask / base - row.mask + row.pot_vault)/ 10000;
                         if (roundRedMask !== null) {
@@ -848,6 +853,13 @@ $(function(){
                             $(".gains-usdt").html("≙ " + usdt + " USDT");
                         }
                     }
+                } else {
+                    $("#your-keys").html("0.00");
+                    $("#scammed").html("0.0000 EOS");
+                    $("#advice").html("0.0000 EOS");
+                    $(".gains").html("0.0000 EOS");
+                    $(".gains-usdt").html("≙ 0.00 USDT");
+                    $("#cost").html("0.0000 EOS");
                 }
             })
         }
@@ -867,7 +879,7 @@ $(function(){
     function doLogoutSuccess() {
         localStorage.removeItem('account');
         $("#log-btn").html("Login With Scatter");
-        $("#your-keys").html("0.0000");
+        $("#your-keys").html("0.00");
         $("#scammed").html("0.0000 EOS");
         $("#advice").html("0.0000 EOS");
         $(".gains").html("0.0000 EOS");
@@ -931,20 +943,12 @@ $(function(){
             return
         }
 
+
+        $('#startedContainer').show();
+        $('#toStartContainer').hide();
+
         if (endTime) {
-            var timedate = new Date(endTime); 　　
-
-            var d = new Date();
-            var len = d.getTime();
-            var offset = d.getTimezoneOffset() / 60;
-            var utcTime = len + offset * 3600 * 1000;
-            if (IsPC()) {
-                var now  = new Date(utcTime);
-            } else {
-                var now  = new Date();
-            }
-            var seconds = parseInt(timedate.getTime() - now.getTime())/1000;　
-
+            var seconds = parseInt(endTime.getTime() - new Date().getTime())/1000;　
             if(seconds <= 0) {
                 isEnded = true;
                 $("#headtimer").html("Over! Please wait the next round!");
