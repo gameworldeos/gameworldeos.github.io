@@ -338,7 +338,7 @@
                             </div>
                             <br>
                             <div class="row">
-                                <div class="col">
+                                <div class="col" id="refUrl">
                                     https://gameworldeos.github.io?ref=eos_account_name
                                 </div>
                             </div>
@@ -832,6 +832,7 @@ $(function(){
         var account = localStorage.getItem('account');
         if (account) {
             account = JSON.parse(localStorage.getItem('account'));
+            $("#refUrl").html("https://gameworldeos.github.io?ref="+account.name);
             api.getTableRows(true, "gameworldcom", account.name, "player").then(function (data) {
                 if (data.rows.length >= 1) {
                     var row = data.rows[0];
@@ -871,8 +872,10 @@ $(function(){
 
     function doLoginSuccess(identity) {
         var account = identity.accounts[0];
+        console.log(account)
         localStorage.setItem('account', JSON.stringify(account));
         $("#log-btn").html("Logout");
+        $("#refUrl").html("https://gameworldeos.github.io?ref="+account.name);
         return account;
     }
 
@@ -885,6 +888,7 @@ $(function(){
         $(".gains").html("0.0000 EOS");
         $(".gains-usdt").html("≙ 0.00 USDT");
         $("#cost").html("0.0000 EOS");
+        $("#refUrl").html("https://gameworldeos.github.io?ref=eos_account_name");
     }
 
     function IsPC() {
