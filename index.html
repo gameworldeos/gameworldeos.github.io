@@ -64,34 +64,48 @@
                 </button>
             </div>
             <div class="modal-body">
+                <p style="font-weight: bold;color: #e6ae49">
+                    Life is like a box of EOS and you don't know how much you will get in return. Mind your own risk and enjoy the game!
+                </p>
+
                 <h5>Dividend rules:</h5>
-                <p>
-                    If you choose the red team to buy keys, 60% of your sent EOS will be given to the current key holders immediately, and another 30% will be kept in the active pot until the countdown becomes 0.
-                </p>
-                <p>
-                    If you choose the blue team  to buy keys, 30% of your sent EOS will be given to the current key holders immediately, and another 60% will be kept in the active pot until the countdown becomes 0.
-                </p>
-                <h5>
-                    Active pot allocation:
-                </h5>
-                <p>
-                    The last one who buys the key before the countdown becomes 0 will become the lucky player and decide the final active pot allocation plan.
-                </p>
-                <p>
-                    If he chooses the red team, 60% of the active pot will be given directly to this last lucky player, and 30% of the active pot will be divided among the red team key holders.
-                </p>
-                <p>
+                <p>If you choose the red team to buy keys, 60% of your sent EOS will be given to the current key holders immediately, and another 30% will be kept in the active pot until the countdown becomes 0.</p>
+                <p>If you choose the blue team  to buy keys, 30% of your sent EOS will be given to the current key holders immediately, and another 60% will be kept in the active pot until the countdown becomes 0.</p>
 
-                    If he chooses the blue tea, 30% of the active pot will be given diretly to this last lucky player, and 60% of the active pot will be divided among the blue team key holders.
+                <h5>Active pot distribution:</h5>
+                <p>Each round officially ends when the countdown clock reaches zero. The last player who have purchased a key before the timer reaches zero becomes the winner. The last team selected by the winner before the timer runs out becomes the winning team.</p>
+                <p>If the red team wins, 60% of the active pot will be given directly to this last lucky player, and 30% of the active pot will be divided among the red team key holders.</p>
+                <p>If the blue team wins, 30% of the active pot will be given diretly to this last lucky player, and 60% of the active pot will be divided among the blue team key holders.</p>
 
-                </p>
-                <h5>
-                    Referral bonus:
-                </h5>
-                <p>
-                    When other players buy keys through your referral link, you will get 8% of their sent EOS as referral bonus.
-                </p>
+                <h5>Referral bonus:</h5>
+                <p>An earlier play will earn 8% of all the EOS put into the game by anyone that joins through his link</p>
+                <p>as referral bonus. If someone tries to cheat by visiting his own referral, he won't get the bonus as his account is not an earlier player yet. If this earlier player hasn't bought any key yet, he won't get the referral bonus either.</p>
 
+                <h5>Entrance threshold:</h5>
+                <p>In the 2nd round, there's one big update that you're expected to see a growing entrance threshold as time goes by.</p>
+                <p>Each time you must buy more than 100 keys at least. When the total sold key amount reaches 1 million, the entrance threshold will raise to 1/10000 of the total sold keys going forward. It's designed to improve the bot cost and lower the bot advantage during the final pot competing process.</p>
+
+                <h5>Frequently asked questions:</h5>
+                <p style="font-weight: bold;color: #f000f0">Q: How could we win over bots during the final pot competing process?</p>
+                <p>A: In the 2nd round, there's one big update that you're expected to see a growing entrance threshold as time goes by.
+                    Each time you must buy more than 100 keys at least.</p>
+                <p>After 1 million keys are sold out, the entrance threshold will raise to 1/10000 of the total sold keys going forward. It's designed to improve the bot cost and lower the bot advantage during the final pot competing process.</p>
+
+                <p style="font-weight: bold;color: #f000f0">Q: Could the team win the active pot by cheating?</p>
+                <p>A: The game behavior is fully controlled by the contract code and the EOS main network. Nobody could decide who/which team or when this lucky player could win the active pot.</p>
+
+                <p style="font-weight: bold;color: #f000f0">Q: Did the team swap the contract sneakingly during the game?</p>
+                <p>A: We only update and re-deploy the contract code when the previous round is over.</p>
+
+                <p style="font-weight: bold;color: #f000f0">Q: Could I use my own referral link to play?</p>
+                <p>A: An earlier play will earn 8% of all the EOS put into the game by anyone that joins through his link</p>
+                <p>as referral bonus. If someone tries to cheat by visiting his own referral, he won't get the bonus as his account is not an earlier player yet. If this earlier player hasn't bought any key yet, he won't get the referral bonus either.</p>
+
+                <p style="font-weight: bold;color: #f000f0">Q: Why do I sometimes see the wrong countdown time?</p>
+                <p>A: Your browser will show the correct remaining time wherever your timezone is. But the remaining time could go wrong if you encounter a network glitch which could be resolved by refreshing again.</p>
+
+                <p style="font-weight: bold;color: #f000f0">Q: Why do I sometimes find that the dividend stops growing?</p>
+                <p>A: Sometimes the new dividend isn't large enough to be updated on the front page due to the data precision limitation which has been fixed already. All dividends are always added to your balance correctly by the contract and could be withdrawn at any time. Any more questions, you are welcome to check the contract code directly in our github repo.</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -99,62 +113,6 @@
         </div>
     </div>
 </div>
-
-<div class="modal fade" id="notice" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="noticeLabel">Notice</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <h5>Update about the 2nd round of the FOMO EOS World Game</h5>
-                <p>
-                    Considering the enthusiastic feedback from the community, we've decided to start the 2nd round of the game at <span id="startAt"></span>.
-
-                    We've cleaned all the data including the referral relations from the 1st round and sent all your earnings in the 1st round back to your accounts already. Right now, we're working on some improvements to make the game more balanced, interesting and fair in the coming rounds.
-                </p>
-
-                <h5>Frequent questions:</h5>
-                <p style="font-weight: bold;color: #f000f0">Q: How could we win over bots during the final pot competing process?</p>
-                <p>A: In the 2nd round, there's one big update that you're expected to see a gradual growing entrance threshold as time goes by. It means you need to buy an increasing number of entrance keys each time to compete the final pot when the game is approaching the end. It's designed to improve the bot cost and lower the bot advantage in the final pot competing process.</p>
-
-                <p style="font-weight: bold;color: #f000f0">Q: Did the team swap the contract sneakingly during the game?</p>
-                <p>A: We only update and re-deploy the contract code when the previous round is over.</p>
-
-                <p style="font-weight: bold;color: #f000f0">Q: Could the team win the pot by cheating?</p>
-                <p>A: The game behavior is fully controlled by the contract code and the EOS main network. Nobody could decide who/which team or when this lucky player would win the final pot.
-                </p>
-
-                <p style="font-weight: bold;color: #f000f0">Q: Could I use my own referral link to play?</p>
-                <p>A: All players could receive the exciting 8% referral bonus only when you visit the site from an earlier player's referral link. If you try to cheat by visiting your own referral link to win the referral bonus for yourself, you won't get the bonus since your account is not an earlier player yet.
-                </p>
-                <br>
-
-                <p style="font-weight: bold;color: #f000f0">Q: Why do I sometimes see the wrong countdown time?</p>
-                <p>A: Your browser will show the correct remaining time wherever your timezone is. But the remaining time could go wrong if you encounter a network glitch which could be resolved by refreshing again.</p>
-
-                <p style="font-weight: bold;color: #f000f0">Q: Why do I sometimes see the dividends stop growing?</p>
-                <p>A: In the 1st round, some users didn't see instant dividend when the active pot increases. Sometimes the new dividend isn't large enough to be updated on the front page due to the data precision limitation which is normal. But all dividends are always added to your balance correcly by the contract and could be withdrawn at any time. Any more questions, you are welcome to check the contract code directly in our github repo.</p>
-
-                <p style="font-weight: bold;color: #e6ae49">Life is like a box of EOS and you don't know how much you will get in return. Mind your own risk and enjoy the game!
-                </p>
-
-                <h5>discord channel:</h5>
-                <p>
-                    <a href="https://discord.gg/8uKp8gq" target="_blank" style="color: blue">https://discord.gg/8uKp8gq</a>
-                </p>
-                <br>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
-            </div>
-        </div>
-    </div>
-</div>
-
 
 <module-template data-is="state-play">
     <div class="blurryboy"></div>
@@ -505,10 +463,6 @@ color: #e6ae49;
     <button type="button" class="btn btn-link" data-toggle="modal" data-target="#exampleModal" style="color: #e6ae49;">
         Rules
     </button>
-    &nbsp;
-    <button type="button" class="btn btn-link" data-toggle="modal" data-target="#notice" style="color: #e6ae49;">
-        Notice
-    </button>
 
 </div>
 <script src="js/alertify.js"></script>
@@ -537,10 +491,6 @@ Date.prototype.Format = function (fmt) { //author: meizz
 }
 
 $(function(){
-    if (!localStorage.getItem('showNotice')) {
-        $('#notice').modal({show: true});
-        localStorage.setItem('showNotice', '1')
-    }
 
     var isTP = tp.isConnected();
     tpAccount = null
