@@ -150,6 +150,13 @@
                 </div>
             </a>
         </div>
+
+        <div class="container scatter" style="display: none">
+            <h2>
+                <a href="https://get-scatter.com/" target="_blank">To Install Scatter</a>
+            </h2>
+            <br>
+        </div>
     </div>
     <div class="container" style="margin-top:-1rem;">
         <div class="row">
@@ -580,6 +587,7 @@ $(function(){
         $("#log-btn").html("Logout");
     } else {
         $("#log-btn").html("Login With Scatter");
+        $(".scatter").show();
     }
 
     function getUrlParam(name) {
@@ -706,6 +714,7 @@ $(function(){
 
         if ($("#keysToBuy").val() < minKeys) {
             Dialog.init('at least ' + minKeys + ' keys!');
+            $("#keysToBuy").val(minKeys)
             return
         }
 
@@ -951,6 +960,7 @@ $(function(){
         localStorage.setItem('account', JSON.stringify(account));
         $("#log-btn").html("Logout");
         $("#refUrl").html("https://gameworldeos.github.io?ref="+account.name);
+        $(".scatter").hide();
         return account;
     }
 
@@ -964,6 +974,7 @@ $(function(){
         $(".gains-usdt").html("≙ 0.00 USDT");
         $("#cost").html("0.0000 EOS");
         $("#refUrl").html("https://gameworldeos.github.io?ref=eos_account_name");
+        $(".scatter").show();
     }
 
     function IsPC() {
