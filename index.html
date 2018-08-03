@@ -861,6 +861,12 @@ $(function(){
 
             endTime = convertToLocalTime(row.end);
             isEnded = row.ended == 1;
+
+            if(isEnded) {
+                $("#headtimer").html("Over! Please wait the next round!");
+                $("#boxtimer").html("Over! Please wait the next round!");
+            }
+
             isStarted = new Date().getTime() > startTime.getTime();
 
             roundKey = row.key / 100;
@@ -1023,6 +1029,10 @@ $(function(){
             return
         }
 
+        if (isEnded) {
+            return
+        }
+
         if (!isStarted) {
             $('#startedContainer').hide();
             $('#toStartContainer').show();
@@ -1038,12 +1048,11 @@ $(function(){
         $('#toStartContainer').hide();
 
         if (endTime) {
-            var seconds = parseInt(endTime.getTime() - new Date().getTime())/1000;　
-            if(seconds <= 0) {
-                isEnded = true;
-                $("#headtimer").html("Over! Please wait the next round!");
-                $("#boxtimer").html("Over! Please wait the next round!");
-                return;
+            var seconds = parseInt(endTime.getTime() - new Date().getTime())/1000;
+            if(seconds <= 0 && !isEnded) {
+                $("#headtimer").html("Your network may have problems!");
+                $("#boxtimer").html("Your network may have problems!");
+                return
             }
 
             var leftTime = displayTimeDelta(seconds);
